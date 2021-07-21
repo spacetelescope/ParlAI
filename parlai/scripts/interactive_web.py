@@ -55,6 +55,9 @@ WEB_HTML = """
                 </div>
                 <div class="hero-foot column is-three-fifths is-offset-one-fifth" style="height: 76px">
                   <form id = "interact">
+                     <div id="loading" class="fa-3x" style="display: none">
+                          <i class="fas fa-sync fa-spin"></i>
+                      </div>
                       <div class="field is-grouped">
                         <p class="control is-expanded">
                           <input class="input" type="text" id="userIn" placeholder="Type in a message">
@@ -124,7 +127,8 @@ WEB_HTML = """
                 event.preventDefault()
                 var text = document.getElementById("userIn").value;
                 document.getElementById('userIn').value = "";
-
+                var loading = document.getElementById("loading");
+                console.log(loading)
                 fetch('/interact', {{
                     headers: {{
                         'Content-Type': 'application/json'
@@ -240,7 +244,8 @@ def setup_interweb_args(shared):
     """
     parser = setup_args()
     parser.description = 'Interactive chat with a model in a web browser'
-    parser.add_argument('--port', type=int, default=PORT, help='Port to listen on.')
+    parser.add_argument('--port', type=int, default=PORT,
+                        help='Port to listen on.')
     parser.add_argument(
         '--host',
         default=HOST_NAME,
